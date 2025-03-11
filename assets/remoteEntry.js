@@ -2,7 +2,7 @@ const currentImports = {};
       const exportSet = new Set(['Module', '__esModule', 'default', '_export_sfc']);
       let moduleMap = {
 "./App":()=>{
-      dynamicLoadingCss(["style-Bp365eWA.css"], false, './App');
+      dynamicLoadingCss(["style.css"], false, './App');
       return __federation_import('/vite-micro-app-example/assets/__federation_expose_App-CF74sJbD.js').then(module =>Object.keys(module).every(item => exportSet.has(item)) ? () => module.default : () => module)},};
       const seen = {};
       const dynamicLoadingCss = (cssFilePaths, dontAppendStylesToHead, exposeItemName) => {
