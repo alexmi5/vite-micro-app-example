@@ -1,5 +1,3 @@
-import { importShared } from './__federation_fn_import-BAKGUW59.js';
-
 var jsxRuntime = {exports: {}};
 
 var reactJsxRuntime_production = {};
@@ -57,6 +55,568 @@ function requireJsxRuntime () {
 }
 
 var jsxRuntimeExports = requireJsxRuntime();
+
+var react = {exports: {}};
+
+var react_production = {};
+
+/**
+ * @license React
+ * react.production.js
+ *
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+var hasRequiredReact_production;
+
+function requireReact_production () {
+	if (hasRequiredReact_production) return react_production;
+	hasRequiredReact_production = 1;
+	var REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"),
+	  REACT_PORTAL_TYPE = Symbol.for("react.portal"),
+	  REACT_FRAGMENT_TYPE = Symbol.for("react.fragment"),
+	  REACT_STRICT_MODE_TYPE = Symbol.for("react.strict_mode"),
+	  REACT_PROFILER_TYPE = Symbol.for("react.profiler"),
+	  REACT_CONSUMER_TYPE = Symbol.for("react.consumer"),
+	  REACT_CONTEXT_TYPE = Symbol.for("react.context"),
+	  REACT_FORWARD_REF_TYPE = Symbol.for("react.forward_ref"),
+	  REACT_SUSPENSE_TYPE = Symbol.for("react.suspense"),
+	  REACT_MEMO_TYPE = Symbol.for("react.memo"),
+	  REACT_LAZY_TYPE = Symbol.for("react.lazy"),
+	  MAYBE_ITERATOR_SYMBOL = Symbol.iterator;
+	function getIteratorFn(maybeIterable) {
+	  if (null === maybeIterable || "object" !== typeof maybeIterable) return null;
+	  maybeIterable =
+	    (MAYBE_ITERATOR_SYMBOL && maybeIterable[MAYBE_ITERATOR_SYMBOL]) ||
+	    maybeIterable["@@iterator"];
+	  return "function" === typeof maybeIterable ? maybeIterable : null;
+	}
+	var ReactNoopUpdateQueue = {
+	    isMounted: function () {
+	      return false;
+	    },
+	    enqueueForceUpdate: function () {},
+	    enqueueReplaceState: function () {},
+	    enqueueSetState: function () {}
+	  },
+	  assign = Object.assign,
+	  emptyObject = {};
+	function Component(props, context, updater) {
+	  this.props = props;
+	  this.context = context;
+	  this.refs = emptyObject;
+	  this.updater = updater || ReactNoopUpdateQueue;
+	}
+	Component.prototype.isReactComponent = {};
+	Component.prototype.setState = function (partialState, callback) {
+	  if (
+	    "object" !== typeof partialState &&
+	    "function" !== typeof partialState &&
+	    null != partialState
+	  )
+	    throw Error(
+	      "takes an object of state variables to update or a function which returns an object of state variables."
+	    );
+	  this.updater.enqueueSetState(this, partialState, callback, "setState");
+	};
+	Component.prototype.forceUpdate = function (callback) {
+	  this.updater.enqueueForceUpdate(this, callback, "forceUpdate");
+	};
+	function ComponentDummy() {}
+	ComponentDummy.prototype = Component.prototype;
+	function PureComponent(props, context, updater) {
+	  this.props = props;
+	  this.context = context;
+	  this.refs = emptyObject;
+	  this.updater = updater || ReactNoopUpdateQueue;
+	}
+	var pureComponentPrototype = (PureComponent.prototype = new ComponentDummy());
+	pureComponentPrototype.constructor = PureComponent;
+	assign(pureComponentPrototype, Component.prototype);
+	pureComponentPrototype.isPureReactComponent = true;
+	var isArrayImpl = Array.isArray,
+	  ReactSharedInternals = { H: null, A: null, T: null, S: null },
+	  hasOwnProperty = Object.prototype.hasOwnProperty;
+	function ReactElement(type, key, self, source, owner, props) {
+	  self = props.ref;
+	  return {
+	    $$typeof: REACT_ELEMENT_TYPE,
+	    type: type,
+	    key: key,
+	    ref: void 0 !== self ? self : null,
+	    props: props
+	  };
+	}
+	function cloneAndReplaceKey(oldElement, newKey) {
+	  return ReactElement(
+	    oldElement.type,
+	    newKey,
+	    void 0,
+	    void 0,
+	    void 0,
+	    oldElement.props
+	  );
+	}
+	function isValidElement(object) {
+	  return (
+	    "object" === typeof object &&
+	    null !== object &&
+	    object.$$typeof === REACT_ELEMENT_TYPE
+	  );
+	}
+	function escape(key) {
+	  var escaperLookup = { "=": "=0", ":": "=2" };
+	  return (
+	    "$" +
+	    key.replace(/[=:]/g, function (match) {
+	      return escaperLookup[match];
+	    })
+	  );
+	}
+	var userProvidedKeyEscapeRegex = /\/+/g;
+	function getElementKey(element, index) {
+	  return "object" === typeof element && null !== element && null != element.key
+	    ? escape("" + element.key)
+	    : index.toString(36);
+	}
+	function noop$1() {}
+	function resolveThenable(thenable) {
+	  switch (thenable.status) {
+	    case "fulfilled":
+	      return thenable.value;
+	    case "rejected":
+	      throw thenable.reason;
+	    default:
+	      switch (
+	        ("string" === typeof thenable.status
+	          ? thenable.then(noop$1, noop$1)
+	          : ((thenable.status = "pending"),
+	            thenable.then(
+	              function (fulfilledValue) {
+	                "pending" === thenable.status &&
+	                  ((thenable.status = "fulfilled"),
+	                  (thenable.value = fulfilledValue));
+	              },
+	              function (error) {
+	                "pending" === thenable.status &&
+	                  ((thenable.status = "rejected"), (thenable.reason = error));
+	              }
+	            )),
+	        thenable.status)
+	      ) {
+	        case "fulfilled":
+	          return thenable.value;
+	        case "rejected":
+	          throw thenable.reason;
+	      }
+	  }
+	  throw thenable;
+	}
+	function mapIntoArray(children, array, escapedPrefix, nameSoFar, callback) {
+	  var type = typeof children;
+	  if ("undefined" === type || "boolean" === type) children = null;
+	  var invokeCallback = false;
+	  if (null === children) invokeCallback = true;
+	  else
+	    switch (type) {
+	      case "bigint":
+	      case "string":
+	      case "number":
+	        invokeCallback = true;
+	        break;
+	      case "object":
+	        switch (children.$$typeof) {
+	          case REACT_ELEMENT_TYPE:
+	          case REACT_PORTAL_TYPE:
+	            invokeCallback = true;
+	            break;
+	          case REACT_LAZY_TYPE:
+	            return (
+	              (invokeCallback = children._init),
+	              mapIntoArray(
+	                invokeCallback(children._payload),
+	                array,
+	                escapedPrefix,
+	                nameSoFar,
+	                callback
+	              )
+	            );
+	        }
+	    }
+	  if (invokeCallback)
+	    return (
+	      (callback = callback(children)),
+	      (invokeCallback =
+	        "" === nameSoFar ? "." + getElementKey(children, 0) : nameSoFar),
+	      isArrayImpl(callback)
+	        ? ((escapedPrefix = ""),
+	          null != invokeCallback &&
+	            (escapedPrefix =
+	              invokeCallback.replace(userProvidedKeyEscapeRegex, "$&/") + "/"),
+	          mapIntoArray(callback, array, escapedPrefix, "", function (c) {
+	            return c;
+	          }))
+	        : null != callback &&
+	          (isValidElement(callback) &&
+	            (callback = cloneAndReplaceKey(
+	              callback,
+	              escapedPrefix +
+	                (null == callback.key ||
+	                (children && children.key === callback.key)
+	                  ? ""
+	                  : ("" + callback.key).replace(
+	                      userProvidedKeyEscapeRegex,
+	                      "$&/"
+	                    ) + "/") +
+	                invokeCallback
+	            )),
+	          array.push(callback)),
+	      1
+	    );
+	  invokeCallback = 0;
+	  var nextNamePrefix = "" === nameSoFar ? "." : nameSoFar + ":";
+	  if (isArrayImpl(children))
+	    for (var i = 0; i < children.length; i++)
+	      (nameSoFar = children[i]),
+	        (type = nextNamePrefix + getElementKey(nameSoFar, i)),
+	        (invokeCallback += mapIntoArray(
+	          nameSoFar,
+	          array,
+	          escapedPrefix,
+	          type,
+	          callback
+	        ));
+	  else if (((i = getIteratorFn(children)), "function" === typeof i))
+	    for (
+	      children = i.call(children), i = 0;
+	      !(nameSoFar = children.next()).done;
+
+	    )
+	      (nameSoFar = nameSoFar.value),
+	        (type = nextNamePrefix + getElementKey(nameSoFar, i++)),
+	        (invokeCallback += mapIntoArray(
+	          nameSoFar,
+	          array,
+	          escapedPrefix,
+	          type,
+	          callback
+	        ));
+	  else if ("object" === type) {
+	    if ("function" === typeof children.then)
+	      return mapIntoArray(
+	        resolveThenable(children),
+	        array,
+	        escapedPrefix,
+	        nameSoFar,
+	        callback
+	      );
+	    array = String(children);
+	    throw Error(
+	      "Objects are not valid as a React child (found: " +
+	        ("[object Object]" === array
+	          ? "object with keys {" + Object.keys(children).join(", ") + "}"
+	          : array) +
+	        "). If you meant to render a collection of children, use an array instead."
+	    );
+	  }
+	  return invokeCallback;
+	}
+	function mapChildren(children, func, context) {
+	  if (null == children) return children;
+	  var result = [],
+	    count = 0;
+	  mapIntoArray(children, result, "", "", function (child) {
+	    return func.call(context, child, count++);
+	  });
+	  return result;
+	}
+	function lazyInitializer(payload) {
+	  if (-1 === payload._status) {
+	    var ctor = payload._result;
+	    ctor = ctor();
+	    ctor.then(
+	      function (moduleObject) {
+	        if (0 === payload._status || -1 === payload._status)
+	          (payload._status = 1), (payload._result = moduleObject);
+	      },
+	      function (error) {
+	        if (0 === payload._status || -1 === payload._status)
+	          (payload._status = 2), (payload._result = error);
+	      }
+	    );
+	    -1 === payload._status && ((payload._status = 0), (payload._result = ctor));
+	  }
+	  if (1 === payload._status) return payload._result.default;
+	  throw payload._result;
+	}
+	var reportGlobalError =
+	  "function" === typeof reportError
+	    ? reportError
+	    : function (error) {
+	        if (
+	          "object" === typeof window &&
+	          "function" === typeof window.ErrorEvent
+	        ) {
+	          var event = new window.ErrorEvent("error", {
+	            bubbles: true,
+	            cancelable: true,
+	            message:
+	              "object" === typeof error &&
+	              null !== error &&
+	              "string" === typeof error.message
+	                ? String(error.message)
+	                : String(error),
+	            error: error
+	          });
+	          if (!window.dispatchEvent(event)) return;
+	        } else if (
+	          "object" === typeof process &&
+	          "function" === typeof process.emit
+	        ) {
+	          process.emit("uncaughtException", error);
+	          return;
+	        }
+	        console.error(error);
+	      };
+	function noop() {}
+	react_production.Children = {
+	  map: mapChildren,
+	  forEach: function (children, forEachFunc, forEachContext) {
+	    mapChildren(
+	      children,
+	      function () {
+	        forEachFunc.apply(this, arguments);
+	      },
+	      forEachContext
+	    );
+	  },
+	  count: function (children) {
+	    var n = 0;
+	    mapChildren(children, function () {
+	      n++;
+	    });
+	    return n;
+	  },
+	  toArray: function (children) {
+	    return (
+	      mapChildren(children, function (child) {
+	        return child;
+	      }) || []
+	    );
+	  },
+	  only: function (children) {
+	    if (!isValidElement(children))
+	      throw Error(
+	        "React.Children.only expected to receive a single React element child."
+	      );
+	    return children;
+	  }
+	};
+	react_production.Component = Component;
+	react_production.Fragment = REACT_FRAGMENT_TYPE;
+	react_production.Profiler = REACT_PROFILER_TYPE;
+	react_production.PureComponent = PureComponent;
+	react_production.StrictMode = REACT_STRICT_MODE_TYPE;
+	react_production.Suspense = REACT_SUSPENSE_TYPE;
+	react_production.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE =
+	  ReactSharedInternals;
+	react_production.act = function () {
+	  throw Error("act(...) is not supported in production builds of React.");
+	};
+	react_production.cache = function (fn) {
+	  return function () {
+	    return fn.apply(null, arguments);
+	  };
+	};
+	react_production.cloneElement = function (element, config, children) {
+	  if (null === element || void 0 === element)
+	    throw Error(
+	      "The argument must be a React element, but you passed " + element + "."
+	    );
+	  var props = assign({}, element.props),
+	    key = element.key,
+	    owner = void 0;
+	  if (null != config)
+	    for (propName in (void 0 !== config.ref && (owner = void 0),
+	    void 0 !== config.key && (key = "" + config.key),
+	    config))
+	      !hasOwnProperty.call(config, propName) ||
+	        "key" === propName ||
+	        "__self" === propName ||
+	        "__source" === propName ||
+	        ("ref" === propName && void 0 === config.ref) ||
+	        (props[propName] = config[propName]);
+	  var propName = arguments.length - 2;
+	  if (1 === propName) props.children = children;
+	  else if (1 < propName) {
+	    for (var childArray = Array(propName), i = 0; i < propName; i++)
+	      childArray[i] = arguments[i + 2];
+	    props.children = childArray;
+	  }
+	  return ReactElement(element.type, key, void 0, void 0, owner, props);
+	};
+	react_production.createContext = function (defaultValue) {
+	  defaultValue = {
+	    $$typeof: REACT_CONTEXT_TYPE,
+	    _currentValue: defaultValue,
+	    _currentValue2: defaultValue,
+	    _threadCount: 0,
+	    Provider: null,
+	    Consumer: null
+	  };
+	  defaultValue.Provider = defaultValue;
+	  defaultValue.Consumer = {
+	    $$typeof: REACT_CONSUMER_TYPE,
+	    _context: defaultValue
+	  };
+	  return defaultValue;
+	};
+	react_production.createElement = function (type, config, children) {
+	  var propName,
+	    props = {},
+	    key = null;
+	  if (null != config)
+	    for (propName in (void 0 !== config.key && (key = "" + config.key), config))
+	      hasOwnProperty.call(config, propName) &&
+	        "key" !== propName &&
+	        "__self" !== propName &&
+	        "__source" !== propName &&
+	        (props[propName] = config[propName]);
+	  var childrenLength = arguments.length - 2;
+	  if (1 === childrenLength) props.children = children;
+	  else if (1 < childrenLength) {
+	    for (var childArray = Array(childrenLength), i = 0; i < childrenLength; i++)
+	      childArray[i] = arguments[i + 2];
+	    props.children = childArray;
+	  }
+	  if (type && type.defaultProps)
+	    for (propName in ((childrenLength = type.defaultProps), childrenLength))
+	      void 0 === props[propName] &&
+	        (props[propName] = childrenLength[propName]);
+	  return ReactElement(type, key, void 0, void 0, null, props);
+	};
+	react_production.createRef = function () {
+	  return { current: null };
+	};
+	react_production.forwardRef = function (render) {
+	  return { $$typeof: REACT_FORWARD_REF_TYPE, render: render };
+	};
+	react_production.isValidElement = isValidElement;
+	react_production.lazy = function (ctor) {
+	  return {
+	    $$typeof: REACT_LAZY_TYPE,
+	    _payload: { _status: -1, _result: ctor },
+	    _init: lazyInitializer
+	  };
+	};
+	react_production.memo = function (type, compare) {
+	  return {
+	    $$typeof: REACT_MEMO_TYPE,
+	    type: type,
+	    compare: void 0 === compare ? null : compare
+	  };
+	};
+	react_production.startTransition = function (scope) {
+	  var prevTransition = ReactSharedInternals.T,
+	    currentTransition = {};
+	  ReactSharedInternals.T = currentTransition;
+	  try {
+	    var returnValue = scope(),
+	      onStartTransitionFinish = ReactSharedInternals.S;
+	    null !== onStartTransitionFinish &&
+	      onStartTransitionFinish(currentTransition, returnValue);
+	    "object" === typeof returnValue &&
+	      null !== returnValue &&
+	      "function" === typeof returnValue.then &&
+	      returnValue.then(noop, reportGlobalError);
+	  } catch (error) {
+	    reportGlobalError(error);
+	  } finally {
+	    ReactSharedInternals.T = prevTransition;
+	  }
+	};
+	react_production.unstable_useCacheRefresh = function () {
+	  return ReactSharedInternals.H.useCacheRefresh();
+	};
+	react_production.use = function (usable) {
+	  return ReactSharedInternals.H.use(usable);
+	};
+	react_production.useActionState = function (action, initialState, permalink) {
+	  return ReactSharedInternals.H.useActionState(action, initialState, permalink);
+	};
+	react_production.useCallback = function (callback, deps) {
+	  return ReactSharedInternals.H.useCallback(callback, deps);
+	};
+	react_production.useContext = function (Context) {
+	  return ReactSharedInternals.H.useContext(Context);
+	};
+	react_production.useDebugValue = function () {};
+	react_production.useDeferredValue = function (value, initialValue) {
+	  return ReactSharedInternals.H.useDeferredValue(value, initialValue);
+	};
+	react_production.useEffect = function (create, deps) {
+	  return ReactSharedInternals.H.useEffect(create, deps);
+	};
+	react_production.useId = function () {
+	  return ReactSharedInternals.H.useId();
+	};
+	react_production.useImperativeHandle = function (ref, create, deps) {
+	  return ReactSharedInternals.H.useImperativeHandle(ref, create, deps);
+	};
+	react_production.useInsertionEffect = function (create, deps) {
+	  return ReactSharedInternals.H.useInsertionEffect(create, deps);
+	};
+	react_production.useLayoutEffect = function (create, deps) {
+	  return ReactSharedInternals.H.useLayoutEffect(create, deps);
+	};
+	react_production.useMemo = function (create, deps) {
+	  return ReactSharedInternals.H.useMemo(create, deps);
+	};
+	react_production.useOptimistic = function (passthrough, reducer) {
+	  return ReactSharedInternals.H.useOptimistic(passthrough, reducer);
+	};
+	react_production.useReducer = function (reducer, initialArg, init) {
+	  return ReactSharedInternals.H.useReducer(reducer, initialArg, init);
+	};
+	react_production.useRef = function (initialValue) {
+	  return ReactSharedInternals.H.useRef(initialValue);
+	};
+	react_production.useState = function (initialState) {
+	  return ReactSharedInternals.H.useState(initialState);
+	};
+	react_production.useSyncExternalStore = function (
+	  subscribe,
+	  getSnapshot,
+	  getServerSnapshot
+	) {
+	  return ReactSharedInternals.H.useSyncExternalStore(
+	    subscribe,
+	    getSnapshot,
+	    getServerSnapshot
+	  );
+	};
+	react_production.useTransition = function () {
+	  return ReactSharedInternals.H.useTransition();
+	};
+	react_production.version = "19.0.0";
+	return react_production;
+}
+
+var hasRequiredReact;
+
+function requireReact () {
+	if (hasRequiredReact) return react.exports;
+	hasRequiredReact = 1;
+	{
+	  react.exports = requireReact_production();
+	}
+	return react.exports;
+}
+
+var reactExports = requireReact();
 
 var dist = {};
 
@@ -308,6 +868,16 @@ function requireDist () {
 
 requireDist();
 
+/**
+ * react-router v7.2.0
+ *
+ * Copyright (c) Remix Software Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE.md file in the root directory of this source tree.
+ *
+ * @license MIT
+ */
 var PopStateEventType = "popstate";
 function createBrowserHistory(options = {}) {
   function createBrowserLocation(window2, globalHistory) {
@@ -866,41 +1436,36 @@ var validRequestMethodsArr = [
   ...validMutationMethodsArr
 ];
 new Set(validRequestMethodsArr);
-const React3 = await importShared('react');
-
-const React = await importShared('react');
-
-var DataRouterContext = React.createContext(null);
+var DataRouterContext = reactExports.createContext(null);
 DataRouterContext.displayName = "DataRouter";
-var DataRouterStateContext = React.createContext(null);
+var DataRouterStateContext = reactExports.createContext(null);
 DataRouterStateContext.displayName = "DataRouterState";
-var ViewTransitionContext = React.createContext({
+var ViewTransitionContext = reactExports.createContext({
   isTransitioning: false
 });
 ViewTransitionContext.displayName = "ViewTransition";
-var FetchersContext = React.createContext(
+var FetchersContext = reactExports.createContext(
   /* @__PURE__ */ new Map()
 );
 FetchersContext.displayName = "Fetchers";
-var AwaitContext = React.createContext(null);
+var AwaitContext = reactExports.createContext(null);
 AwaitContext.displayName = "Await";
-var NavigationContext = React.createContext(
+var NavigationContext = reactExports.createContext(
   null
 );
 NavigationContext.displayName = "Navigation";
-var LocationContext = React.createContext(
+var LocationContext = reactExports.createContext(
   null
 );
 LocationContext.displayName = "Location";
-var RouteContext = React.createContext({
+var RouteContext = reactExports.createContext({
   outlet: null,
   matches: [],
   isDataRoute: false
 });
 RouteContext.displayName = "Route";
-var RouteErrorContext = React.createContext(null);
+var RouteErrorContext = reactExports.createContext(null);
 RouteErrorContext.displayName = "RouteError";
-const React2 = await importShared('react');
 function useHref(to, { relative } = {}) {
   invariant(
     useInRouterContext(),
@@ -908,7 +1473,7 @@ function useHref(to, { relative } = {}) {
     // router loaded. We can help them understand how to avoid that.
     `useHref() may be used only in the context of a <Router> component.`
   );
-  let { basename, navigator: navigator2 } = React2.useContext(NavigationContext);
+  let { basename, navigator: navigator2 } = reactExports.useContext(NavigationContext);
   let { hash, pathname, search } = useResolvedPath(to, { relative });
   let joinedPathname = pathname;
   if (basename !== "/") {
@@ -917,7 +1482,7 @@ function useHref(to, { relative } = {}) {
   return navigator2.createHref({ pathname: joinedPathname, search, hash });
 }
 function useInRouterContext() {
-  return React2.useContext(LocationContext) != null;
+  return reactExports.useContext(LocationContext) != null;
 }
 function useLocation() {
   invariant(
@@ -926,17 +1491,17 @@ function useLocation() {
     // router loaded. We can help them understand how to avoid that.
     `useLocation() may be used only in the context of a <Router> component.`
   );
-  return React2.useContext(LocationContext).location;
+  return reactExports.useContext(LocationContext).location;
 }
 var navigateEffectWarning = `You should call navigate() in a React.useEffect(), not when your component is first rendered.`;
 function useIsomorphicLayoutEffect(cb) {
-  let isStatic = React2.useContext(NavigationContext).static;
+  let isStatic = reactExports.useContext(NavigationContext).static;
   if (!isStatic) {
-    React2.useLayoutEffect(cb);
+    reactExports.useLayoutEffect(cb);
   }
 }
 function useNavigate() {
-  let { isDataRoute } = React2.useContext(RouteContext);
+  let { isDataRoute } = reactExports.useContext(RouteContext);
   return isDataRoute ? useNavigateStable() : useNavigateUnstable();
 }
 function useNavigateUnstable() {
@@ -946,16 +1511,16 @@ function useNavigateUnstable() {
     // router loaded. We can help them understand how to avoid that.
     `useNavigate() may be used only in the context of a <Router> component.`
   );
-  let dataRouterContext = React2.useContext(DataRouterContext);
-  let { basename, navigator: navigator2 } = React2.useContext(NavigationContext);
-  let { matches } = React2.useContext(RouteContext);
+  let dataRouterContext = reactExports.useContext(DataRouterContext);
+  let { basename, navigator: navigator2 } = reactExports.useContext(NavigationContext);
+  let { matches } = reactExports.useContext(RouteContext);
   let { pathname: locationPathname } = useLocation();
   let routePathnamesJson = JSON.stringify(getResolveToMatches(matches));
-  let activeRef = React2.useRef(false);
+  let activeRef = reactExports.useRef(false);
   useIsomorphicLayoutEffect(() => {
     activeRef.current = true;
   });
-  let navigate = React2.useCallback(
+  let navigate = reactExports.useCallback(
     (to, options = {}) => {
       warning(activeRef.current, navigateEffectWarning);
       if (!activeRef.current) return;
@@ -988,19 +1553,19 @@ function useNavigateUnstable() {
   );
   return navigate;
 }
-var OutletContext = React2.createContext(null);
+var OutletContext = reactExports.createContext(null);
 function useOutlet(context) {
-  let outlet = React2.useContext(RouteContext).outlet;
+  let outlet = reactExports.useContext(RouteContext).outlet;
   if (outlet) {
-    return /* @__PURE__ */ React2.createElement(OutletContext.Provider, { value: context }, outlet);
+    return /* @__PURE__ */ reactExports.createElement(OutletContext.Provider, { value: context }, outlet);
   }
   return outlet;
 }
 function useResolvedPath(to, { relative } = {}) {
-  let { matches } = React2.useContext(RouteContext);
+  let { matches } = reactExports.useContext(RouteContext);
   let { pathname: locationPathname } = useLocation();
   let routePathnamesJson = JSON.stringify(getResolveToMatches(matches));
-  return React2.useMemo(
+  return reactExports.useMemo(
     () => resolveTo(
       to,
       JSON.parse(routePathnamesJson),
@@ -1020,8 +1585,8 @@ function useRoutesImpl(routes, locationArg, dataRouterState, future) {
     // router loaded. We can help them understand how to avoid that.
     `useRoutes() may be used only in the context of a <Router> component.`
   );
-  let { navigator: navigator2, static: isStatic } = React2.useContext(NavigationContext);
-  let { matches: parentMatches } = React2.useContext(RouteContext);
+  let { navigator: navigator2, static: isStatic } = reactExports.useContext(NavigationContext);
+  let { matches: parentMatches } = reactExports.useContext(RouteContext);
   let routeMatch = parentMatches[parentMatches.length - 1];
   let parentParams = routeMatch ? routeMatch.params : {};
   let parentPathname = routeMatch ? routeMatch.pathname : "/";
@@ -1088,7 +1653,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     future
   );
   if (locationArg && renderedMatches) {
-    return /* @__PURE__ */ React2.createElement(
+    return /* @__PURE__ */ reactExports.createElement(
       LocationContext.Provider,
       {
         value: {
@@ -1122,12 +1687,12 @@ function DefaultErrorComponent() {
       "Error handled by React Router default ErrorBoundary:",
       error
     );
-    devInfo = /* @__PURE__ */ React2.createElement(React2.Fragment, null, /* @__PURE__ */ React2.createElement("p", null, "💿 Hey developer 👋"), /* @__PURE__ */ React2.createElement("p", null, "You can provide a way better UX than this when your app throws errors by providing your own ", /* @__PURE__ */ React2.createElement("code", { style: codeStyles }, "ErrorBoundary"), " or", " ", /* @__PURE__ */ React2.createElement("code", { style: codeStyles }, "errorElement"), " prop on your route."));
+    devInfo = /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement("p", null, "💿 Hey developer 👋"), /* @__PURE__ */ reactExports.createElement("p", null, "You can provide a way better UX than this when your app throws errors by providing your own ", /* @__PURE__ */ reactExports.createElement("code", { style: codeStyles }, "ErrorBoundary"), " or", " ", /* @__PURE__ */ reactExports.createElement("code", { style: codeStyles }, "errorElement"), " prop on your route."));
   }
-  return /* @__PURE__ */ React2.createElement(React2.Fragment, null, /* @__PURE__ */ React2.createElement("h2", null, "Unexpected Application Error!"), /* @__PURE__ */ React2.createElement("h3", { style: { fontStyle: "italic" } }, message), stack ? /* @__PURE__ */ React2.createElement("pre", { style: preStyles }, stack) : null, devInfo);
+  return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement("h2", null, "Unexpected Application Error!"), /* @__PURE__ */ reactExports.createElement("h3", { style: { fontStyle: "italic" } }, message), stack ? /* @__PURE__ */ reactExports.createElement("pre", { style: preStyles }, stack) : null, devInfo);
 }
-var defaultErrorElement = /* @__PURE__ */ React2.createElement(DefaultErrorComponent, null);
-var RenderErrorBoundary = class extends React2.Component {
+var defaultErrorElement = /* @__PURE__ */ reactExports.createElement(DefaultErrorComponent, null);
+var RenderErrorBoundary = class extends reactExports.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -1161,7 +1726,7 @@ var RenderErrorBoundary = class extends React2.Component {
     );
   }
   render() {
-    return this.state.error !== void 0 ? /* @__PURE__ */ React2.createElement(RouteContext.Provider, { value: this.props.routeContext }, /* @__PURE__ */ React2.createElement(
+    return this.state.error !== void 0 ? /* @__PURE__ */ reactExports.createElement(RouteContext.Provider, { value: this.props.routeContext }, /* @__PURE__ */ reactExports.createElement(
       RouteErrorContext.Provider,
       {
         value: this.state.error,
@@ -1171,11 +1736,11 @@ var RenderErrorBoundary = class extends React2.Component {
   }
 };
 function RenderedRoute({ routeContext, match, children }) {
-  let dataRouterContext = React2.useContext(DataRouterContext);
+  let dataRouterContext = reactExports.useContext(DataRouterContext);
   if (dataRouterContext && dataRouterContext.static && dataRouterContext.staticContext && (match.route.errorElement || match.route.ErrorBoundary)) {
     dataRouterContext.staticContext._deepestRenderedBoundaryId = match.route.id;
   }
-  return /* @__PURE__ */ React2.createElement(RouteContext.Provider, { value: routeContext }, children);
+  return /* @__PURE__ */ reactExports.createElement(RouteContext.Provider, { value: routeContext }, children);
 }
 function _renderMatches(matches, parentMatches = [], dataRouterState = null, future = null) {
   if (matches == null) {
@@ -1261,13 +1826,13 @@ function _renderMatches(matches, parentMatches = [], dataRouterState = null, fut
       } else if (shouldRenderHydrateFallback) {
         children = hydrateFallbackElement;
       } else if (match.route.Component) {
-        children = /* @__PURE__ */ React2.createElement(match.route.Component, null);
+        children = /* @__PURE__ */ reactExports.createElement(match.route.Component, null);
       } else if (match.route.element) {
         children = match.route.element;
       } else {
         children = outlet;
       }
-      return /* @__PURE__ */ React2.createElement(
+      return /* @__PURE__ */ reactExports.createElement(
         RenderedRoute,
         {
           match,
@@ -1280,7 +1845,7 @@ function _renderMatches(matches, parentMatches = [], dataRouterState = null, fut
         }
       );
     };
-    return dataRouterState && (match.route.ErrorBoundary || match.route.errorElement || index === 0) ? /* @__PURE__ */ React2.createElement(
+    return dataRouterState && (match.route.ErrorBoundary || match.route.errorElement || index === 0) ? /* @__PURE__ */ reactExports.createElement(
       RenderErrorBoundary,
       {
         location: dataRouterState.location,
@@ -1297,17 +1862,17 @@ function getDataRouterConsoleError(hookName) {
   return `${hookName} must be used within a data router.  See https://reactrouter.com/en/main/routers/picking-a-router.`;
 }
 function useDataRouterContext(hookName) {
-  let ctx = React2.useContext(DataRouterContext);
+  let ctx = reactExports.useContext(DataRouterContext);
   invariant(ctx, getDataRouterConsoleError(hookName));
   return ctx;
 }
 function useDataRouterState(hookName) {
-  let state = React2.useContext(DataRouterStateContext);
+  let state = reactExports.useContext(DataRouterStateContext);
   invariant(state, getDataRouterConsoleError(hookName));
   return state;
 }
 function useRouteContext(hookName) {
-  let route = React2.useContext(RouteContext);
+  let route = reactExports.useContext(RouteContext);
   invariant(route, getDataRouterConsoleError(hookName));
   return route;
 }
@@ -1327,7 +1892,7 @@ function useRouteId() {
   );
 }
 function useRouteError() {
-  let error = React2.useContext(RouteErrorContext);
+  let error = reactExports.useContext(RouteErrorContext);
   let state = useDataRouterState(
     "useRouteError"
     /* UseRouteError */
@@ -1350,11 +1915,11 @@ function useNavigateStable() {
     "useNavigate"
     /* UseNavigateStable */
   );
-  let activeRef = React2.useRef(false);
+  let activeRef = reactExports.useRef(false);
   useIsomorphicLayoutEffect(() => {
     activeRef.current = true;
   });
-  let navigate = React2.useCallback(
+  let navigate = reactExports.useCallback(
     async (to, options = {}) => {
       warning(activeRef.current, navigateEffectWarning);
       if (!activeRef.current) return;
@@ -1375,7 +1940,7 @@ function warningOnce(key, cond, message) {
     warning(false, message);
   }
 }
-React3.memo(DataRoutes);
+reactExports.memo(DataRoutes);
 function DataRoutes({
   routes,
   future,
@@ -1405,7 +1970,7 @@ function Router({
     `You cannot render a <Router> inside another <Router>. You should never have more than one in your app.`
   );
   let basename = basenameProp.replace(/^\/*/, "/");
-  let navigationContext = React3.useMemo(
+  let navigationContext = reactExports.useMemo(
     () => ({
       basename,
       navigator: navigator2,
@@ -1424,7 +1989,7 @@ function Router({
     state = null,
     key = "default"
   } = locationProp;
-  let locationContext = React3.useMemo(() => {
+  let locationContext = reactExports.useMemo(() => {
     let trailingPathname = stripBasename(pathname, basename);
     if (trailingPathname == null) {
       return null;
@@ -1447,7 +2012,7 @@ function Router({
   if (locationContext == null) {
     return null;
   }
-  return /* @__PURE__ */ React3.createElement(NavigationContext.Provider, { value: navigationContext }, /* @__PURE__ */ React3.createElement(LocationContext.Provider, { children, value: locationContext }));
+  return /* @__PURE__ */ reactExports.createElement(NavigationContext.Provider, { value: navigationContext }, /* @__PURE__ */ reactExports.createElement(LocationContext.Provider, { children, value: locationContext }));
 }
 function Routes({
   children,
@@ -1455,68 +2020,14 @@ function Routes({
 }) {
   return useRoutes(createRoutesFromChildren(children), location);
 }
-(class extends React3.Component {
-  constructor(props) {
-    super(props);
-    this.state = { error: null };
-  }
-  static getDerivedStateFromError(error) {
-    return { error };
-  }
-  componentDidCatch(error, errorInfo) {
-    console.error(
-      "<Await> caught the following error during render",
-      error,
-      errorInfo
-    );
-  }
-  render() {
-    let { children, errorElement, resolve } = this.props;
-    let promise = null;
-    let status = 0;
-    if (!(resolve instanceof Promise)) {
-      status = 1;
-      promise = Promise.resolve();
-      Object.defineProperty(promise, "_tracked", { get: () => true });
-      Object.defineProperty(promise, "_data", { get: () => resolve });
-    } else if (this.state.error) {
-      status = 2;
-      let renderError = this.state.error;
-      promise = Promise.reject().catch(() => {
-      });
-      Object.defineProperty(promise, "_tracked", { get: () => true });
-      Object.defineProperty(promise, "_error", { get: () => renderError });
-    } else if (resolve._tracked) {
-      promise = resolve;
-      status = "_error" in promise ? 2 : "_data" in promise ? 1 : 0;
-    } else {
-      status = 0;
-      Object.defineProperty(resolve, "_tracked", { get: () => true });
-      promise = resolve.then(
-        (data2) => Object.defineProperty(resolve, "_data", { get: () => data2 }),
-        (error) => Object.defineProperty(resolve, "_error", { get: () => error })
-      );
-    }
-    if (status === 2 && !errorElement) {
-      throw promise._error;
-    }
-    if (status === 2) {
-      return /* @__PURE__ */ React3.createElement(AwaitContext.Provider, { value: promise, children: errorElement });
-    }
-    if (status === 1) {
-      return /* @__PURE__ */ React3.createElement(AwaitContext.Provider, { value: promise, children });
-    }
-    throw promise;
-  }
-});
 function createRoutesFromChildren(children, parentPath = []) {
   let routes = [];
-  React3.Children.forEach(children, (element, index) => {
-    if (!React3.isValidElement(element)) {
+  reactExports.Children.forEach(children, (element, index) => {
+    if (!reactExports.isValidElement(element)) {
       return;
     }
     let treePath = [...parentPath, index];
-    if (element.type === React3.Fragment) {
+    if (element.type === reactExports.Fragment) {
       routes.push.apply(
         routes,
         createRoutesFromChildren(element.props.children, treePath)
@@ -1559,8 +2070,6 @@ function createRoutesFromChildren(children, parentPath = []) {
   });
   return routes;
 }
-const React10 = await importShared('react');
-
 var defaultMethod = "get";
 var defaultEncType = "application/x-www-form-urlencoded";
 function isHtmlElement(object) {
@@ -1664,8 +2173,6 @@ function getFormSubmissionInfo(target, basename) {
   }
   return { action, method: method.toLowerCase(), encType, formData, body };
 }
-const React9 = await importShared('react');
-
 function invariant2(value, message) {
   if (value === false || value === null || typeof value === "undefined") {
     throw new Error(message);
@@ -1813,10 +2320,6 @@ function dedupeLinkDescriptors(descriptors, preloads) {
     return deduped;
   }, []);
 }
-function createHtml(html) {
-  return { __html: html };
-}
-await importShared('react');
 function singleFetchUrl(reqUrl) {
   let url = typeof reqUrl === "string" ? new URL(
     reqUrl,
@@ -1831,137 +2334,8 @@ function singleFetchUrl(reqUrl) {
   }
   return url;
 }
-await importShared('react');
-
-await importShared('react');
-
-const React5 = await importShared('react');
-
-(class extends React5.Component {
-  constructor(props) {
-    super(props);
-    this.state = { error: props.error || null, location: props.location };
-  }
-  static getDerivedStateFromError(error) {
-    return { error };
-  }
-  static getDerivedStateFromProps(props, state) {
-    if (state.location !== props.location) {
-      return { error: props.error || null, location: props.location };
-    }
-    return { error: props.error || state.error, location: state.location };
-  }
-  render() {
-    if (this.state.error) {
-      return /* @__PURE__ */ React5.createElement(
-        RemixRootDefaultErrorBoundary,
-        {
-          error: this.state.error,
-          isOutsideRemixApp: true
-        }
-      );
-    } else {
-      return this.props.children;
-    }
-  }
-});
-function RemixRootDefaultErrorBoundary({
-  error,
-  isOutsideRemixApp
-}) {
-  console.error(error);
-  let heyDeveloper = /* @__PURE__ */ React5.createElement(
-    "script",
-    {
-      dangerouslySetInnerHTML: {
-        __html: `
-        console.log(
-          "💿 Hey developer 👋. You can provide a way better UX than this when your app throws errors. Check out https://remix.run/guides/errors for more information."
-        );
-      `
-      }
-    }
-  );
-  if (isRouteErrorResponse(error)) {
-    return /* @__PURE__ */ React5.createElement(BoundaryShell, { title: "Unhandled Thrown Response!" }, /* @__PURE__ */ React5.createElement("h1", { style: { fontSize: "24px" } }, error.status, " ", error.statusText), heyDeveloper);
-  }
-  let errorInstance;
-  if (error instanceof Error) {
-    errorInstance = error;
-  } else {
-    let errorString = error == null ? "Unknown Error" : typeof error === "object" && "toString" in error ? error.toString() : JSON.stringify(error);
-    errorInstance = new Error(errorString);
-  }
-  return /* @__PURE__ */ React5.createElement(
-    BoundaryShell,
-    {
-      title: "Application Error!",
-      isOutsideRemixApp
-    },
-    /* @__PURE__ */ React5.createElement("h1", { style: { fontSize: "24px" } }, "Application Error"),
-    /* @__PURE__ */ React5.createElement(
-      "pre",
-      {
-        style: {
-          padding: "2rem",
-          background: "hsla(10, 50%, 50%, 0.1)",
-          color: "red",
-          overflow: "auto"
-        }
-      },
-      errorInstance.stack
-    ),
-    heyDeveloper
-  );
-}
-function BoundaryShell({
-  title,
-  renderScripts,
-  isOutsideRemixApp,
-  children
-}) {
-  let { routeModules } = useFrameworkContext();
-  if (routeModules.root?.Layout && !isOutsideRemixApp) {
-    return children;
-  }
-  return /* @__PURE__ */ React5.createElement("html", { lang: "en" }, /* @__PURE__ */ React5.createElement("head", null, /* @__PURE__ */ React5.createElement("meta", { charSet: "utf-8" }), /* @__PURE__ */ React5.createElement(
-    "meta",
-    {
-      name: "viewport",
-      content: "width=device-width,initial-scale=1,viewport-fit=cover"
-    }
-  ), /* @__PURE__ */ React5.createElement("title", null, title)), /* @__PURE__ */ React5.createElement("body", null, /* @__PURE__ */ React5.createElement("main", { style: { fontFamily: "system-ui, sans-serif", padding: "2rem" } }, children, renderScripts ? /* @__PURE__ */ React5.createElement(Scripts, null) : null)));
-}
-await importShared('react');
-function isFogOfWarEnabled(ssr) {
-  return ssr === true;
-}
-function getPartialManifest(manifest, router) {
-  let routeIds = new Set(router.state.matches.map((m) => m.route.id));
-  let segments = router.state.location.pathname.split("/").filter(Boolean);
-  let paths = ["/"];
-  segments.pop();
-  while (segments.length > 0) {
-    paths.push(`/${segments.join("/")}`);
-    segments.pop();
-  }
-  paths.forEach((path) => {
-    let matches = matchRoutes(router.routes, path, router.basename);
-    if (matches) {
-      matches.forEach((m) => routeIds.add(m.route.id));
-    }
-  });
-  let initialRoutes = [...routeIds].reduce(
-    (acc, id) => Object.assign(acc, { [id]: manifest.routes[id] }),
-    {}
-  );
-  return {
-    ...manifest,
-    routes: initialRoutes
-  };
-}
 function useDataRouterContext2() {
-  let context = React9.useContext(DataRouterContext);
+  let context = reactExports.useContext(DataRouterContext);
   invariant2(
     context,
     "You must render this element inside a <DataRouterContext.Provider> element"
@@ -1969,17 +2343,17 @@ function useDataRouterContext2() {
   return context;
 }
 function useDataRouterStateContext() {
-  let context = React9.useContext(DataRouterStateContext);
+  let context = reactExports.useContext(DataRouterStateContext);
   invariant2(
     context,
     "You must render this element inside a <DataRouterStateContext.Provider> element"
   );
   return context;
 }
-var FrameworkContext = React9.createContext(void 0);
+var FrameworkContext = reactExports.createContext(void 0);
 FrameworkContext.displayName = "FrameworkContext";
 function useFrameworkContext() {
-  let context = React9.useContext(FrameworkContext);
+  let context = reactExports.useContext(FrameworkContext);
   invariant2(
     context,
     "You must render this element inside a <HydratedRouter> element"
@@ -1987,12 +2361,12 @@ function useFrameworkContext() {
   return context;
 }
 function usePrefetchBehavior(prefetch, theirElementProps) {
-  let frameworkContext = React9.useContext(FrameworkContext);
-  let [maybePrefetch, setMaybePrefetch] = React9.useState(false);
-  let [shouldPrefetch, setShouldPrefetch] = React9.useState(false);
+  let frameworkContext = reactExports.useContext(FrameworkContext);
+  let [maybePrefetch, setMaybePrefetch] = reactExports.useState(false);
+  let [shouldPrefetch, setShouldPrefetch] = reactExports.useState(false);
   let { onFocus, onBlur, onMouseEnter, onMouseLeave, onTouchStart } = theirElementProps;
-  let ref = React9.useRef(null);
-  React9.useEffect(() => {
+  let ref = reactExports.useRef(null);
+  reactExports.useEffect(() => {
     if (prefetch === "render") {
       setShouldPrefetch(true);
     }
@@ -2009,7 +2383,7 @@ function usePrefetchBehavior(prefetch, theirElementProps) {
       };
     }
   }, [prefetch]);
-  React9.useEffect(() => {
+  reactExports.useEffect(() => {
     if (maybePrefetch) {
       let id = setTimeout(() => {
         setShouldPrefetch(true);
@@ -2052,30 +2426,24 @@ function composeEventHandlers(theirHandler, ourHandler) {
     }
   };
 }
-function getActiveMatches(matches, errors, isSpaMode) {
-  if (isSpaMode && !isHydrated) {
-    return [matches[0]];
-  }
-  return matches;
-}
 function PrefetchPageLinks({
   page,
   ...dataLinkProps
 }) {
   let { router } = useDataRouterContext2();
-  let matches = React9.useMemo(
+  let matches = reactExports.useMemo(
     () => matchRoutes(router.routes, page, router.basename),
     [router.routes, page, router.basename]
   );
   if (!matches) {
     return null;
   }
-  return /* @__PURE__ */ React9.createElement(PrefetchPageLinksImpl, { page, matches, ...dataLinkProps });
+  return /* @__PURE__ */ reactExports.createElement(PrefetchPageLinksImpl, { page, matches, ...dataLinkProps });
 }
 function useKeyedPrefetchLinks(matches) {
   let { manifest, routeModules } = useFrameworkContext();
-  let [keyedPrefetchLinks, setKeyedPrefetchLinks] = React9.useState([]);
-  React9.useEffect(() => {
+  let [keyedPrefetchLinks, setKeyedPrefetchLinks] = reactExports.useState([]);
+  reactExports.useEffect(() => {
     let interrupted = false;
     void getKeyedPrefetchLinks(matches, manifest, routeModules).then(
       (links) => {
@@ -2098,7 +2466,7 @@ function PrefetchPageLinksImpl({
   let location = useLocation();
   let { manifest, routeModules } = useFrameworkContext();
   let { loaderData, matches } = useDataRouterStateContext();
-  let newMatchesForData = React9.useMemo(
+  let newMatchesForData = reactExports.useMemo(
     () => getNewMatchesForLinks(
       page,
       nextMatches,
@@ -2109,7 +2477,7 @@ function PrefetchPageLinksImpl({
     ),
     [page, nextMatches, matches, manifest, location]
   );
-  let newMatchesForAssets = React9.useMemo(
+  let newMatchesForAssets = reactExports.useMemo(
     () => getNewMatchesForLinks(
       page,
       nextMatches,
@@ -2120,7 +2488,7 @@ function PrefetchPageLinksImpl({
     ),
     [page, nextMatches, matches, manifest, location]
   );
-  let dataHrefs = React9.useMemo(() => {
+  let dataHrefs = reactExports.useMemo(() => {
     if (page === location.pathname + location.search + location.hash) {
       return [];
     }
@@ -2159,133 +2527,16 @@ function PrefetchPageLinksImpl({
     page,
     routeModules
   ]);
-  let moduleHrefs = React9.useMemo(
+  let moduleHrefs = reactExports.useMemo(
     () => getModuleLinkHrefs(newMatchesForAssets, manifest),
     [newMatchesForAssets, manifest]
   );
   let keyedPrefetchLinks = useKeyedPrefetchLinks(newMatchesForAssets);
-  return /* @__PURE__ */ React9.createElement(React9.Fragment, null, dataHrefs.map((href2) => /* @__PURE__ */ React9.createElement("link", { key: href2, rel: "prefetch", as: "fetch", href: href2, ...linkProps })), moduleHrefs.map((href2) => /* @__PURE__ */ React9.createElement("link", { key: href2, rel: "modulepreload", href: href2, ...linkProps })), keyedPrefetchLinks.map(({ key, link }) => (
+  return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, dataHrefs.map((href2) => /* @__PURE__ */ reactExports.createElement("link", { key: href2, rel: "prefetch", as: "fetch", href: href2, ...linkProps })), moduleHrefs.map((href2) => /* @__PURE__ */ reactExports.createElement("link", { key: href2, rel: "modulepreload", href: href2, ...linkProps })), keyedPrefetchLinks.map(({ key, link }) => (
     // these don't spread `linkProps` because they are full link descriptors
     // already with their own props
-    /* @__PURE__ */ React9.createElement("link", { key, ...link })
+    /* @__PURE__ */ reactExports.createElement("link", { key, ...link })
   )));
-}
-var isHydrated = false;
-function Scripts(props) {
-  let { manifest, serverHandoffString, isSpaMode, ssr, renderMeta } = useFrameworkContext();
-  let { router, static: isStatic, staticContext } = useDataRouterContext2();
-  let { matches: routerMatches } = useDataRouterStateContext();
-  let enableFogOfWar = isFogOfWarEnabled(ssr);
-  if (renderMeta) {
-    renderMeta.didRenderScripts = true;
-  }
-  let matches = getActiveMatches(routerMatches, null, isSpaMode);
-  React9.useEffect(() => {
-    isHydrated = true;
-  }, []);
-  let initialScripts = React9.useMemo(() => {
-    let streamScript = "window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());";
-    let contextScript = staticContext ? `window.__reactRouterContext = ${serverHandoffString};${streamScript}` : " ";
-    let routeModulesScript = !isStatic ? " " : `${manifest.hmr?.runtime ? `import ${JSON.stringify(manifest.hmr.runtime)};` : ""}${!enableFogOfWar ? `import ${JSON.stringify(manifest.url)}` : ""};
-${matches.map((match, routeIndex) => {
-      let routeVarName = `route${routeIndex}`;
-      let manifestEntry = manifest.routes[match.route.id];
-      invariant2(manifestEntry, `Route ${match.route.id} not found in manifest`);
-      let {
-        clientActionModule,
-        clientLoaderModule,
-        hydrateFallbackModule,
-        module
-      } = manifestEntry;
-      let chunks = [
-        ...clientActionModule ? [
-          {
-            module: clientActionModule,
-            varName: `${routeVarName}_clientAction`
-          }
-        ] : [],
-        ...clientLoaderModule ? [
-          {
-            module: clientLoaderModule,
-            varName: `${routeVarName}_clientLoader`
-          }
-        ] : [],
-        ...hydrateFallbackModule ? [
-          {
-            module: hydrateFallbackModule,
-            varName: `${routeVarName}_HydrateFallback`
-          }
-        ] : [],
-        { module, varName: `${routeVarName}_main` }
-      ];
-      if (chunks.length === 1) {
-        return `import * as ${routeVarName} from ${JSON.stringify(module)};`;
-      }
-      let chunkImportsSnippet = chunks.map((chunk) => `import * as ${chunk.varName} from "${chunk.module}";`).join("\n");
-      let mergedChunksSnippet = `const ${routeVarName} = {${chunks.map((chunk) => `...${chunk.varName}`).join(",")}};`;
-      return [chunkImportsSnippet, mergedChunksSnippet].join("\n");
-    }).join("\n")}
-  ${enableFogOfWar ? (
-      // Inline a minimal manifest with the SSR matches
-      `window.__reactRouterManifest = ${JSON.stringify(
-        getPartialManifest(manifest, router),
-        null,
-        2
-      )};`
-    ) : ""}
-  window.__reactRouterRouteModules = {${matches.map((match, index) => `${JSON.stringify(match.route.id)}:route${index}`).join(",")}};
-
-import(${JSON.stringify(manifest.entry.module)});`;
-    return /* @__PURE__ */ React9.createElement(React9.Fragment, null, /* @__PURE__ */ React9.createElement(
-      "script",
-      {
-        ...props,
-        suppressHydrationWarning: true,
-        dangerouslySetInnerHTML: createHtml(contextScript),
-        type: void 0
-      }
-    ), /* @__PURE__ */ React9.createElement(
-      "script",
-      {
-        ...props,
-        suppressHydrationWarning: true,
-        dangerouslySetInnerHTML: createHtml(routeModulesScript),
-        type: "module",
-        async: true
-      }
-    ));
-  }, []);
-  let preloads = isHydrated ? [] : manifest.entry.imports.concat(
-    getModuleLinkHrefs(matches, manifest, {
-      includeHydrateFallback: true
-    })
-  );
-  return isHydrated ? null : /* @__PURE__ */ React9.createElement(React9.Fragment, null, !enableFogOfWar ? /* @__PURE__ */ React9.createElement(
-    "link",
-    {
-      rel: "modulepreload",
-      href: manifest.url,
-      crossOrigin: props.crossOrigin
-    }
-  ) : null, /* @__PURE__ */ React9.createElement(
-    "link",
-    {
-      rel: "modulepreload",
-      href: manifest.entry.module,
-      crossOrigin: props.crossOrigin
-    }
-  ), dedupe(preloads).map((path) => /* @__PURE__ */ React9.createElement(
-    "link",
-    {
-      key: path,
-      rel: "modulepreload",
-      href: path,
-      crossOrigin: props.crossOrigin
-    }
-  )), initialScripts);
-}
-function dedupe(array) {
-  return [...new Set(array)];
 }
 function mergeRefs(...refs) {
   return (value) => {
@@ -2310,23 +2561,23 @@ function BrowserRouter({
   children,
   window: window2
 }) {
-  let historyRef = React10.useRef();
+  let historyRef = reactExports.useRef();
   if (historyRef.current == null) {
     historyRef.current = createBrowserHistory({ window: window2, v5Compat: true });
   }
   let history = historyRef.current;
-  let [state, setStateImpl] = React10.useState({
+  let [state, setStateImpl] = reactExports.useState({
     action: history.action,
     location: history.location
   });
-  let setState = React10.useCallback(
+  let setState = reactExports.useCallback(
     (newState) => {
-      React10.startTransition(() => setStateImpl(newState));
+      reactExports.startTransition(() => setStateImpl(newState));
     },
     [setStateImpl]
   );
-  React10.useLayoutEffect(() => history.listen(setState), [history, setState]);
-  return /* @__PURE__ */ React10.createElement(
+  reactExports.useLayoutEffect(() => history.listen(setState), [history, setState]);
+  return /* @__PURE__ */ reactExports.createElement(
     Router,
     {
       basename,
@@ -2338,7 +2589,7 @@ function BrowserRouter({
   );
 }
 var ABSOLUTE_URL_REGEX2 = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
-var Link = React10.forwardRef(
+var Link = reactExports.forwardRef(
   function LinkWithRef({
     onClick,
     discover = "render",
@@ -2353,7 +2604,7 @@ var Link = React10.forwardRef(
     viewTransition,
     ...rest
   }, forwardedRef) {
-    let { basename } = React10.useContext(NavigationContext);
+    let { basename } = reactExports.useContext(NavigationContext);
     let isAbsolute = typeof to === "string" && ABSOLUTE_URL_REGEX2.test(to);
     let absoluteHref;
     let isExternal = false;
@@ -2398,7 +2649,7 @@ var Link = React10.forwardRef(
     }
     let link = (
       // eslint-disable-next-line jsx-a11y/anchor-has-content
-      /* @__PURE__ */ React10.createElement(
+      /* @__PURE__ */ reactExports.createElement(
         "a",
         {
           ...rest,
@@ -2411,11 +2662,11 @@ var Link = React10.forwardRef(
         }
       )
     );
-    return shouldPrefetch && !isAbsolute ? /* @__PURE__ */ React10.createElement(React10.Fragment, null, link, /* @__PURE__ */ React10.createElement(PrefetchPageLinks, { page: href2 })) : link;
+    return shouldPrefetch && !isAbsolute ? /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, link, /* @__PURE__ */ reactExports.createElement(PrefetchPageLinks, { page: href2 })) : link;
   }
 );
 Link.displayName = "Link";
-var NavLink = React10.forwardRef(
+var NavLink = reactExports.forwardRef(
   function NavLinkWithRef({
     "aria-current": ariaCurrentProp = "page",
     caseSensitive = false,
@@ -2429,8 +2680,8 @@ var NavLink = React10.forwardRef(
   }, ref) {
     let path = useResolvedPath(to, { relative: rest.relative });
     let location = useLocation();
-    let routerState = React10.useContext(DataRouterStateContext);
-    let { navigator: navigator2, basename } = React10.useContext(NavigationContext);
+    let routerState = reactExports.useContext(DataRouterStateContext);
+    let { navigator: navigator2, basename } = reactExports.useContext(NavigationContext);
     let isTransitioning = routerState != null && // Conditional usage is OK here because the usage of a data router is static
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useViewTransitionState(path) && viewTransition === true;
@@ -2466,7 +2717,7 @@ var NavLink = React10.forwardRef(
       ].filter(Boolean).join(" ");
     }
     let style = typeof styleProp === "function" ? styleProp(renderProps) : styleProp;
-    return /* @__PURE__ */ React10.createElement(
+    return /* @__PURE__ */ reactExports.createElement(
       Link,
       {
         ...rest,
@@ -2482,7 +2733,7 @@ var NavLink = React10.forwardRef(
   }
 );
 NavLink.displayName = "NavLink";
-var Form = React10.forwardRef(
+var Form = reactExports.forwardRef(
   ({
     discover = "render",
     fetcherKey,
@@ -2519,7 +2770,7 @@ var Form = React10.forwardRef(
         viewTransition
       });
     };
-    return /* @__PURE__ */ React10.createElement(
+    return /* @__PURE__ */ reactExports.createElement(
       "form",
       {
         ref: forwardedRef,
@@ -2537,7 +2788,7 @@ function getDataRouterConsoleError2(hookName) {
   return `${hookName} must be used within a data router.  See https://reactrouter.com/en/main/routers/picking-a-router.`;
 }
 function useDataRouterContext3(hookName) {
-  let ctx = React10.useContext(DataRouterContext);
+  let ctx = reactExports.useContext(DataRouterContext);
   invariant(ctx, getDataRouterConsoleError2(hookName));
   return ctx;
 }
@@ -2552,7 +2803,7 @@ function useLinkClickHandler(to, {
   let navigate = useNavigate();
   let location = useLocation();
   let path = useResolvedPath(to, { relative });
-  return React10.useCallback(
+  return reactExports.useCallback(
     (event) => {
       if (shouldProcessLinkClick(event, target)) {
         event.preventDefault();
@@ -2587,9 +2838,9 @@ function useSubmit() {
     "useSubmit"
     /* UseSubmit */
   );
-  let { basename } = React10.useContext(NavigationContext);
+  let { basename } = reactExports.useContext(NavigationContext);
   let currentRouteId = useRouteId();
-  return React10.useCallback(
+  return reactExports.useCallback(
     async (target, options = {}) => {
       let { action, method, encType, formData, body } = getFormSubmissionInfo(
         target,
@@ -2624,8 +2875,8 @@ function useSubmit() {
   );
 }
 function useFormAction(action, { relative } = {}) {
-  let { basename } = React10.useContext(NavigationContext);
-  let routeContext = React10.useContext(RouteContext);
+  let { basename } = reactExports.useContext(NavigationContext);
+  let routeContext = reactExports.useContext(RouteContext);
   invariant(routeContext, "useFormAction must be used inside a RouteContext");
   let [match] = routeContext.matches.slice(-1);
   let path = { ...useResolvedPath(action ? action : ".", { relative }) };
@@ -2651,7 +2902,7 @@ function useFormAction(action, { relative } = {}) {
   return createPath(path);
 }
 function useViewTransitionState(to, opts = {}) {
-  let vtContext = React10.useContext(ViewTransitionContext);
+  let vtContext = reactExports.useContext(ViewTransitionContext);
   invariant(
     vtContext != null,
     "`useViewTransitionState` must be used within `react-router-dom`'s `RouterProvider`.  Did you accidentally import `RouterProvider` from `react-router`?"
@@ -2668,9 +2919,6 @@ function useViewTransitionState(to, opts = {}) {
   let nextPath = stripBasename(vtContext.nextLocation.pathname, basename) || vtContext.nextLocation.pathname;
   return matchPath(path.pathname, nextPath) != null || matchPath(path.pathname, currentPath) != null;
 }
-await importShared('react');
-await importShared('react');
-await importShared('react');
 new TextEncoder();
 
 const menu = [
@@ -2688,7 +2936,7 @@ const Layout = () => {
     /* @__PURE__ */ jsxRuntimeExports.jsx("nav", { children: menu.map((item) => {
       return /* @__PURE__ */ jsxRuntimeExports.jsx(NavLink, { to: item.path, className: ({ isActive }) => isActive ? "active" : "", children: item.name }, item.path);
     }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { children: "MICRO-1 APP" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { children: "MICRO-1 APP!" }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(Outlet, {})
   ] });
 };
@@ -2706,4 +2954,4 @@ const App = (props) => {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(BrowserRouter, { basename: baseUrl, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Routes, { children: getRoutes() }) });
 };
 
-export { App as default, jsxRuntimeExports as j };
+export { reactExports as a, App as default, jsxRuntimeExports as j, requireReact as r };

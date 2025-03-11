@@ -1,6 +1,4 @@
-import { importShared } from './__federation_fn_import-BAKGUW59.js';
-import App, { j as jsxRuntimeExports } from './__federation_expose_App-B9sCTIf7.js';
-import { r as requireReact } from './index-D9SXwo1H.js';
+import App, { r as requireReact, j as jsxRuntimeExports, a as reactExports } from './__federation_expose_App-CF74sJbD.js';
 
 var client = {exports: {}};
 
@@ -15818,7 +15816,6 @@ function requireClient () {
 
 var clientExports = requireClient();
 
-const {StrictMode} = await importShared('react');
 clientExports.createRoot(document.getElementById("root")).render(
-  /* @__PURE__ */ jsxRuntimeExports.jsx(StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, { baseUrl: "/vite-micro-app-example" }) })
+  /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, { baseUrl: "/vite-micro-app-example" }) })
 );
