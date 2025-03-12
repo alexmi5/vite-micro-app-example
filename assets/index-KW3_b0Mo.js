@@ -1,4 +1,4 @@
-import App, { r as requireReact, j as jsxRuntimeExports, a as reactExports } from './__federation_expose_App-CF74sJbD.js';
+import App, { r as requireReact, j as jsxRuntimeExports, a as reactExports } from '../__federation_expose_App.js';
 
 var client = {exports: {}};
 
