@@ -3,7 +3,7 @@ const currentImports = {};
       let moduleMap = {
 "./App":()=>{
       dynamicLoadingCss(["style.css"], false, './App');
-      return __federation_import('/vite-micro-app-example/assets/__federation_expose_App-CF74sJbD.js').then(module =>Object.keys(module).every(item => exportSet.has(item)) ? () => module.default : () => module)},};
+      return __federation_import('/vite-micro-app-example/assets/__federation_expose_App.js').then(module =>Object.keys(module).every(item => exportSet.has(item)) ? () => module.default : () => module)},};
       const seen = {};
       const dynamicLoadingCss = (cssFilePaths, dontAppendStylesToHead, exposeItemName) => {
         const metaUrl = import.meta.url;
